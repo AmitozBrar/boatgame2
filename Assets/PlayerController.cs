@@ -36,14 +36,28 @@ public class PlayerController : MonoBehaviour
     public GameObject cannonball;
     public Transform Barrel;
 
+    Collider hitbox;
+
     public float force;
     private void Start()
     {
        rb = GetComponent<Rigidbody>();
         //rb.freezeRotation = true;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+
+        hitbox = GetComponent<Collider>();
+        //hitbox.isTrigger = false;
+        Debug.Log("Trigger On : " + hitbox.isTrigger);
         //controller = gameObject.GetComponent<CharacterController>();
+    }
+
+    void OnMouseDown()
+    {
+        //GameObject's Collider is now a trigger Collider when the GameObject is clicked. It now acts as a trigger
+        //hitbox.isTrigger = true;
+        //Output to console the GameObject’s trigger state
+        Debug.Log("Trigger On : " + hitbox.isTrigger);
     }
 
     
