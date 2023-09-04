@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     float yRotation;
     public bool trigger = false;
     public GameObject cannonball;
+
+    public GameObject particle;
     public Transform Barrel;
     Collider hitbox;
     //non editable variables
@@ -92,7 +94,7 @@ public class PlayerController : MonoBehaviour
             lastShot = Time.time;
             GameObject bullet = Instantiate(cannonball, Barrel.position, Barrel.rotation);
             bullet.GetComponent<Rigidbody>().velocity = Barrel.forward * force ;
-            
+            Instantiate(particle, Barrel.position,Quaternion.identity);
         }
         
         

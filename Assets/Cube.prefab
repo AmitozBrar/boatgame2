@@ -105,6 +105,7 @@ MonoBehaviour:
   sensY: 200
   trigger: 0
   cannonball: {fileID: 2471582542168742610, guid: 78b8daf27929db34d833485ebf01acca, type: 3}
+  particle: {fileID: 0}
   Barrel: {fileID: 5693975067393452689}
   cooldown: 1
   force: 20
@@ -393,6 +394,7 @@ MonoBehaviour:
   sensY: 200
   trigger: 0
   cannonball: {fileID: 2471582542168742610, guid: 78b8daf27929db34d833485ebf01acca, type: 3}
+  particle: {fileID: 993755797425705961, guid: 061c70b782234474a91fd682c3203b3e, type: 3}
   Barrel: {fileID: 5693975067393452689}
   cooldown: 1
   force: 20
