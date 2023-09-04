@@ -6,90 +6,60 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
+    
+    public Transform orientation;
+    Rigidbody rb;
     private float playerSpeed = 2.0f;
-    
-    private CharacterController controller;
-    private Vector3 playerVelocity;
-    private bool groundedPlayer;
-    
+    //private CharacterController controller;
     private Vector2 movementInput = Vector2.zero;
     private Vector2 rotateInput = Vector2.zero;
-
      float HorizontalInput;
     float VerticalInput;
-
-    Vector3 moveDirection;
-
-    Rigidbody rb;
-
-    // Start is called before the first frame update
-
+    
     public float sensX;
     public float sensY;
-
- public Transform orientation;
     float xRotation;
     float yRotation;
-
     public bool trigger = false;
     public GameObject cannonball;
     public Transform Barrel;
-
     Collider hitbox;
+    //non editable variables
+    private float lastShot;
+    public float cooldown;
+    Vector3 moveDirection;
 
     public float force;
     private void Start()
     {
-       rb = GetComponent<Rigidbody>();
-        //rb.freezeRotation = true;
+        rb = GetComponent<Rigidbody>();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
 
         hitbox = GetComponent<Collider>();
         //hitbox.isTrigger = false;
         Debug.Log("Trigger On : " + hitbox.isTrigger);
-        //controller = gameObject.GetComponent<CharacterController>();
+       // controller = gameObject.GetComponent<CharacterController>();
     }
-
-    void OnMouseDown()
-    {
-        //GameObject's Collider is now a trigger Collider when the GameObject is clicked. It now acts as a trigger
-        //hitbox.isTrigger = true;
-        //Output to console the GameObject’s trigger state
-        Debug.Log("Trigger On : " + hitbox.isTrigger);
-    }
-
-    
 
     public void OnMove(InputAction.CallbackContext context){
         movementInput = context.ReadValue<Vector2>();
-        //Debug.Log(movementInput);
     }
 
     public void OnShoot(InputAction.CallbackContext context){
         trigger = context.ReadValue<float>() > 0.5f; // ReadValue returns a float for buttons
-        if (trigger)
-        {
-            Debug.Log("Shoot button pressed");
-        }
     }
 
     public void OnRotation(InputAction.CallbackContext context){
         rotateInput = context.ReadValue<Vector2>();
-        //Debug.Log(rotateInput);
     }
-
-    
 
     void Update()
     {
-        
         MyInput();
         //Vector3 move = new Vector3(movementInput.x, 0,movementInput.y);
         //controller.Move(move * Time.deltaTime * playerSpeed);
 
-        
     }
     private void MyInput(){
         HorizontalInput = 0 ; //Input.GetAxisRaw("Horizontal");
@@ -104,26 +74,38 @@ public class PlayerController : MonoBehaviour
         
         
         yRotation += mouseX;
-
         xRotation -= mouseY;
 
         xRotation = Mathf.Clamp(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation,0 );
         moveDirection = orientation.forward * VerticalInput + orientation.right * HorizontalInput;
-
+        //controller.Move(moveDirection*Time.deltaTime * playerSpeed);
         rb.AddForce(moveDirection.normalized * playerSpeed * 10f, ForceMode.Force);
     }
     // Update is called once per frame
-
+    public void shoot(){
+        
+        if(Time.time - lastShot < cooldown){
+        }
+        else{
+            //Debug.Log("not ready");
+            lastShot = Time.time;
+            GameObject bullet = Instantiate(cannonball, Barrel.position, Barrel.rotation);
+            bullet.GetComponent<Rigidbody>().velocity = Barrel.forward * force ;
+            
+        }
+        
+        
+    }
     
     void FixedUpdate()
     {
        MovePlayer();
 
        if(trigger){
-            GameObject bullet = Instantiate(cannonball, Barrel.position, Barrel.rotation);
-            bullet.GetComponent<Rigidbody>().velocity = Barrel.forward * force * Time.deltaTime;
-        }
+        shoot();
+       }
+       
     }
 }
 

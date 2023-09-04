@@ -5,7 +5,7 @@ using UnityEngine;
 public class collisionTest : MonoBehaviour
 {
     public MeshDestroy death;
-
+    public float health = 3;
     private void Awake()
     {
         death = GetComponent<MeshDestroy>();
@@ -13,7 +13,12 @@ public class collisionTest : MonoBehaviour
     void OnTriggerEnter(Collider other){
         if(other.gameObject.tag == "bullet"){
             print("ENTER");
-            death.DestroyMesh();
+            health -= 1;
+
+            if(health == 0){
+                death.DestroyMesh();
+            }
+            
         }
     }
     void OnTriggerStay(Collider other){
