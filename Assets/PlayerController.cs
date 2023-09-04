@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     
     public Transform orientation;
     Rigidbody rb;
-    private float playerSpeed = 2.0f;
+    public float playerSpeed = 2.0f;
     //private CharacterController controller;
     private Vector2 movementInput = Vector2.zero;
     private Vector2 rotateInput = Vector2.zero;

@@ -6,6 +6,10 @@ public class collisionTest : MonoBehaviour
 {
     public MeshDestroy death;
     public float health = 3;
+
+    public GameObject particle;
+
+        public Transform hitLocation;
     private void Awake()
     {
         death = GetComponent<MeshDestroy>();
@@ -18,6 +22,7 @@ public class collisionTest : MonoBehaviour
             if(health == 0){
                 death.DestroyMesh();
             }
+            Instantiate(particle, hitLocation.position,Quaternion.identity);
             
         }
     }
