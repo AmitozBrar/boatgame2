@@ -21,6 +21,7 @@ public class collisionTest : MonoBehaviour
 
             if(health == 0){
                 death.DestroyMesh();
+                Destroy(transform.root.gameObject);
             }
             Instantiate(particle, hitLocation.position,Quaternion.identity);
             
